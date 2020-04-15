@@ -13,8 +13,8 @@ foreach($data as $row){?>
 
     <?php $play_minutes = getPlayminutes($row["gameName"]); ?>
     <a class = "text-danger" href="planning.php?id=<?php echo $row["id"];?>" onclick="return confirm('Weet je zeker dat je <?php echo $row['gameName']; ?> om <?php echo $row['starttime']; ?> wilt verwijderen?');"><i class="fas fa-times"></i> Verwijder</a> <br>
-
-    <p>Starttijd: <?php echo $row["starttime"];?> uur</p>
+    
+    <p>Starttijd: <?php echo date('g:i', strtotime($row["starttime"]));?> uur</p>
 
     <p>Spelnaam: <?php echo $row["gameName"];?></p>
 

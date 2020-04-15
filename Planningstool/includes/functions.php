@@ -50,7 +50,7 @@ function getGame($id){
 
 function getPlanning(){
     $connect = connectDatabase();
-    $query = $connect->prepare("SELECT * FROM planning ORDER BY starttime ASC");
+    $query = $connect->prepare("SELECT * FROM planning ORDER BY starttime DESC");
     $query->execute();
     return $query->fetchAll();
 }

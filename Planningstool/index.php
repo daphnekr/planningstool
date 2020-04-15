@@ -5,7 +5,7 @@ connectDatabase();
 
 if(empty($_GET['options']) || empty($_GET['order']))
 {
-  $_GET['options'] = 'name';
+  $_GET['options'] = 'id';
   $_GET['order'] = 'ASC';
 }
 
@@ -15,6 +15,7 @@ if(isset($_GET['submit']))
 { 
   getAllGames($_GET['options'], $_GET['order']);
 }
+
 
 include("includes/header.php")
 ?>
