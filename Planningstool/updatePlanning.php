@@ -8,6 +8,7 @@ if(empty($_GET['options']) || empty($_GET['order']))
 }
 
 $data = getAllGames($_GET['options'], $_GET['order']);
+$planning = getDetailsPlanningUpdate($_GET['id']);
 
 $gameName = $starttime = $gameleader = $players = "";
 $starttimeErr = $gameleaderErr = $playersErr = "";
@@ -51,6 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if($valid){
         updatePlanning($gameName, $starttime, $gameleader, $players, $_POST["id"]);
+        header("Location: planning.php");
+        exit();
     }
     
 }
@@ -67,7 +70,7 @@ include("includes/header.php");
     <div class="col-sm-10">
     <select name="plannedGame">
     <?php foreach($data as $game){?>
-        <option value="<?php echo $game["name"]?>"><?php echo $game["name"]?></option>
+        <option value="<?php echo $game["name"]?>" <?php if ($game['name'] == $planning["gameName"]) echo 'selected'; ?>><?php echo $game["name"]?></option>
     <?php } ?>
     </select>
     </div>
@@ -83,15 +86,17 @@ include("includes/header.php");
   <div class="form-group row">
     <label for="inputPassword" class="col-sm-2 col-form-label">Wie legt het spel uit?</label>
     <div class="col-sm-10">
-    <input type="text" name="gameleader"><span class="text-danger"><?php echo $gameleaderErr;?></span>
+    <input type="text" name="gameleader" placeholder = "<?php echo $planning["gameleader"]?>"><span class="text-danger"><?php echo $gameleaderErr;?></span>
     </div>
   </div>
 
   <div class="form-group row">
     <label for="inputPassword" class="col-sm-2 col-form-label">Wie zijn de spelers?</label>
     <div class="col-sm-10">
-    <input type="text" name="players"><span class="text-danger"><?php echo $playersErr;?></span>
+    <input type="text" name="players" placeholder = "<?php echo $planning["players"]?>"><span class="text-danger"><?php echo $playersErr;?></span>
     </div>
+
+    <input type="hidden" name="id" value="<?php echo $planning['id']?>" />
   </div>
 
   <input class = "mb-3 btn btn-danger" type="submit" value = "Bewerken">

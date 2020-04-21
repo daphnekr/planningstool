@@ -61,30 +61,30 @@ function updatePlanning($gameName, $starttime, $gameleader, $players, $id){
     return $query->execute(['gameName'=> $gameName, 'starttime'=> $starttime, 'gameleader'=> $gameleader, 'players'=> $players, 'id' => $id]);
 }
 
+function getDetailsPlanningUpdate($id){
+    $connect = connectDatabase();
+    $query = $connect->prepare("SELECT * FROM planning WHERE `id` = :id");
+    $query->execute(['id'=> $id]);
+    return $query->fetch();
+}
+
 function deletePlanningsItem($id){
     $connect = connectDatabase();
     $query = $connect->prepare("DELETE FROM planning WHERE id = :id");
     return $query->execute(['id'=> $id]);
 }
 
-function getPlayminutes($gameName){
-    $connect = connectDatabase();
-    $query = $connect->prepare("SELECT `play_minutes` FROM games WHERE `name` = :gameName");
-    $query->execute(['gameName'=> $gameName]);
-    return $query->fetch();
-}
-
-function detailsPlanningsItem($gameName){
+function getGamesFromId($gameName){
     $connect = connectDatabase();
     $query = $connect->prepare("SELECT * FROM games WHERE `name` = :gameName");
     $query->execute(['gameName'=> $gameName]);
     return $query->fetch();
 }
 
-function getPlanningDetails($gameName){
+function getPlanningDetails($id){
     $connect = connectDatabase();
-    $query = $connect->prepare("SELECT * FROM planning WHERE `gameName` = :gameName");
-    $query->execute(['gameName'=> $gameName]);
+    $query = $connect->prepare("SELECT * FROM planning WHERE `id` = :id");
+    $query->execute(['id'=> $id]);
     return $query->fetch();
 }
 
