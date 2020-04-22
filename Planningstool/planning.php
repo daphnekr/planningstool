@@ -2,9 +2,10 @@
 include("includes/functions.php");
 connectDatabase();
 $data = getPlanning();
-deletePlanningsItem($_GET["id"]);
-date_default_timezone_set("Europe/Amsterdam");
 
+if(!empty($_GET["id"])){
+   deletePlanningsItem($_GET["id"]); 
+}
 
 
 include("includes/header.php");

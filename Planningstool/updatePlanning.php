@@ -52,8 +52,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if($valid){
         updatePlanning($gameName, $starttime, $gameleader, $players, $_POST["id"]);
-        header("Location: planning.php");
-        exit();
+        echo "<script>
+        alert('Planning is bijgewerkt.');
+        window.location.href='planning.php';
+        </script>";
     }
     
 }
@@ -62,7 +64,7 @@ include("includes/header.php");
 ?>
 
 <h2>Planning bewerken</h2> <br>
-<form  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+<form  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?<?= $_SERVER["QUERY_STRING"]?>" method="post">
 
 <div class="form-group row">
 
@@ -70,7 +72,7 @@ include("includes/header.php");
     <div class="col-sm-10">
     <select name="plannedGame">
     <?php foreach($data as $game){?>
-        <option value="<?php echo $game["name"]?>" <?php if ($game['name'] == $planning["gameName"]) echo 'selected'; ?>><?php echo $game["name"]?></option>
+        <option value="<?php echo htmlentities($game["name"])?>" <?php if ($game['name'] == $planning["gameName"]) echo 'selected'; ?>><?php echo htmlentities($game["name"])?></option>
     <?php } ?>
     </select>
     </div>

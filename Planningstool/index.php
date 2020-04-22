@@ -19,22 +19,22 @@ if(isset($_GET['submit']))
 
 include("includes/header.php")
 ?>
+<div class = "text-center">
+  <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+      <label for="optie-select">Sorteer de spellen op:</label>
+      <select name="options" id="optie-select">
+          <option value="name">Naam</option>
+          <option value="max_players">Maximale spelers</option>
+          <option value="play_minutes">Speeltijd</option>
+      </select>
 
-<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-    <label for="optie-select">Sorteer de spellen op:</label>
-    <select name="options" id="optie-select">
-        <option value="name">Naam</option>
-        <option value="max_players">Maximale spelers</option>
-        <option value="play_minutes">Speeltijd</option>
-    </select>
-
-    <select name="order" id="optie-select">
-        <option value="ASC">van laag naar hoog</option>
-        <option value="DESC">van hoog naar laag</option>
-    </select>
-    <input type ="submit" value="Verander">
-  </form>
-
+      <select name="order" id="optie-select">
+          <option value="ASC">van laag naar hoog</option>
+          <option value="DESC">van hoog naar laag</option>
+      </select>
+      <input type ="submit" value="Verander">
+    </form>
+</div>
 
 <div class = "row ">
 <?php foreach($data as $row){?>

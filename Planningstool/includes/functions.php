@@ -50,7 +50,7 @@ function getGame($id){
 
 function getPlanning(){
     $connect = connectDatabase();
-    $query = $connect->prepare("SELECT * FROM planning ORDER BY starttime DESC");
+    $query = $connect->prepare("SELECT * FROM planning ORDER BY starttime ASC");
     $query->execute();
     return $query->fetchAll();
 }
@@ -71,6 +71,10 @@ function getDetailsPlanningUpdate($id){
 function deletePlanningsItem($id){
     $connect = connectDatabase();
     $query = $connect->prepare("DELETE FROM planning WHERE id = :id");
+    echo "<script>
+    alert('Planning is verwijderd.');
+    window.location.href='planning.php';
+    </script>";
     return $query->execute(['id'=> $id]);
 }
 

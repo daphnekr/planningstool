@@ -50,8 +50,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if($valid){
         createPlanning($gameName, $starttime, $gameleader, $players);
-        header("Location: planning.php");
-        exit();
+        echo "<script>
+        alert('Planning is toegevoegd.');
+        window.location.href='planning.php';
+        </script>";
     }
     
 }
@@ -67,7 +69,7 @@ include("includes/header.php");
     <div class="col-sm-10">
     <select name="plannedGame">
     <?php foreach($data as $game){?>
-        <option value="<?php echo $game["name"]?>"><?php echo $game["name"]?></option>
+        <option value="<?php echo htmlentities($game["name"])?>"><?php echo htmlentities($game["name"])?></option>
     <?php } ?>
     </select>
     </div>
