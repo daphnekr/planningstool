@@ -24,5 +24,6 @@
             <a href="index.php" class="btn btn-danger">Overzicht spelletjes</a>
             <a href="planning.php" class="btn btn-danger">Planning</a>
             <a <?php if ($countRows < 10) echo "href='planner.php'"; else echo "title='Het maximale aantal spellen is ingepland'"; ?> class="btn btn-danger">Planner</a>
+            <a href="gameleaders.php" class="btn btn-danger">Spelleiders</a>
         </div>
     </div>

@@ -3,6 +3,7 @@ include("includes/functions.php");
 connectDatabase();
 $planning = getPlanningDetails($_GET['id']);
 $game = getGamesFromId($_GET['name']);
+$gameleader = getGameleaderFromId($_GET["gameleader"]);
 
 
 include("includes/header.php")
@@ -19,7 +20,7 @@ include("includes/header.php")
     <div class = "img-thumbnail w-50 col-3 mr-5 d-inline-block bg-light">
             <p>
                 <b>Starttijd</b> <?php echo date('H:i', strtotime($planning["starttime"])) ?> uur<br>
-                <b>Spelleider:</b> <?php echo $planning["gameleader"] ?> <br>
+                <b>Spelleider:</b> <?php echo $gameleader["name"] ?> <br>
                 <b>Spelers:</b> <?php echo $planning["players"] ?> <br>    
             </p>
 
