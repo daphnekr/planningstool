@@ -40,10 +40,33 @@ function createGameleader($gameleader){
     
 }
 
-function createPlanning($date, $starttime, $gameleader, $players, $gameName){
+function createDate($date){
     $connect = connectDatabase();
-    $query = $connect->prepare("INSERT INTO planning (date, starttime, gameleader_id, players, gameName_id) VALUES (:date, :starttime, (SELECT id FROM gameleader WHERE name = :gameleader LIMIT 1), :players, (SELECT id FROM games WHERE name = :gameName))");
-    return $query->execute(["date" => $date, "starttime" => $starttime, "gameleader" => $gameleader, "players" => $players, "gameName"=> $gameName]);
+    $query1 = $connect->prepare("SELECT * FROM `date` WHERE `date` = :date");
+    $query1->execute(["date" => $date]);
+    $result = $query1->fetch();
+    if ($result == false){
+        $query = $connect->prepare("INSERT INTO `date` (`date`) VALUES (:date)");
+        return $query->execute(["date" => $date]);
+    } 
+}
+
+function createPlanning($date_id, $starttime, $gameleader, $players, $gameName){
+    $connect = connectDatabase();
+    $query1 = $connect->prepare("SELECT COUNT(date_id) FROM `planning` WHERE (SELECT date FROM date WHERE date = :date_id)");
+    $query1->execute(["date_id" => $date_id]);
+    $count = $query1->fetch();
+    var_dump($count);
+    if ($count == 10){
+        return "Er zijn al 10 spellen ingepland op deze datum";
+    }else{
+        $query = $connect->prepare("INSERT INTO planning (date_id, starttime, gameleader_id, players, gameName_id) VALUES ((SELECT id FROM `date` WHERE `date` = :date), :starttime, (SELECT id FROM gameleader WHERE name = :gameleader LIMIT 1), :players, (SELECT id FROM games WHERE name = :gameName))");
+        echo "<script>
+        alert('Planning is toegevoegd.');
+        window.location.href='planning.php';
+        </script>";
+        return $query->execute(["date" => $date_id, "starttime" => $starttime, "gameleader" => $gameleader, "players" => $players, "gameName"=> $gameName]);
+    }
 }
 
 function test_input($data) {
@@ -68,10 +91,10 @@ function getPlanning(){
 }
 
 
-function updatePlanning($starttime, $gameleader, $players, $gameName, $id){
+function updatePlanning($date_id, $starttime, $gameleader, $players, $gameName, $id){
     $connect = connectDatabase();
-    $query = $connect->prepare("UPDATE planning SET `starttime` = :starttime, `gameleader_id` = (SELECT id FROM gameleader WHERE name = :gameleader LIMIT 1), `players` = :players, gameName_id = (SELECT id FROM games WHERE name = :gameName) WHERE id = :id");
-    return $query->execute(['starttime'=> $starttime, 'gameleader'=> $gameleader, 'players'=> $players, 'gameName'=> $gameName, 'id' => $id]);
+    $query = $connect->prepare("UPDATE planning SET `date_id` = (SELECT id FROM `date` WHERE `date` = :date), `starttime` = :starttime, `gameleader_id` = (SELECT id FROM gameleader WHERE name = :gameleader LIMIT 1), `players` = :players, gameName_id = (SELECT id FROM games WHERE name = :gameName) WHERE id = :id");
+    return $query->execute(["date" => $date_id, 'starttime'=> $starttime, 'gameleader'=> $gameleader, 'players'=> $players, 'gameName'=> $gameName, 'id' => $id]);
 }
 
 function getDetailsPlanningUpdate($id){
@@ -91,6 +114,16 @@ function deletePlanningsItem($id){
     return $query->execute(['id'=> $id]);
 }
 
+function deleteGameleader($id){
+    $connect = connectDatabase();
+    $query = $connect->prepare("DELETE FROM gameleader WHERE id = :id");
+    echo "<script>
+    alert('Spelleider is verwijderd.');
+    window.location.href='gameleaders.php';
+    </script>";
+    return $query->execute(['id'=> $id]);
+}
+
 function getGamesFromId($gameName_id){
     $connect = connectDatabase();
     $query = $connect->prepare("SELECT * FROM games WHERE `id` = :gameName_id");
@@ -102,6 +135,13 @@ function getGameleaderFromId($gameleader_id){
     $connect = connectDatabase();
     $query = $connect->prepare("SELECT * FROM gameleader WHERE `id` = :gameleader_id");
     $query->execute(['gameleader_id'=> $gameleader_id]);
+    return $query->fetch();
+}
+
+function getDateFromId($date_id){
+    $connect = connectDatabase();
+    $query = $connect->prepare("SELECT * FROM date WHERE `id` = :date_id");
+    $query->execute(['date_id'=> $date_id]);
     return $query->fetch();
 }
 

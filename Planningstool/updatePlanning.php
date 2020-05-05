@@ -30,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $dateErr = " * Verplicht";
     } else {
         $date = test_input($_POST["date"]);
+        createDate($_POST["date"]);
     }
 
     if (empty($_POST["starttime"])) {
@@ -61,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if($valid){
-        updatePlanning($starttime, $gameleader, $players, $gameName, $_POST["id"]);
+        updatePlanning($date, $starttime, $gameleader, $players, $gameName, $_POST["id"]);
         echo "<script>
         alert('Planning is bijgewerkt.');
         window.location.href='planning.php';

@@ -3,7 +3,9 @@ include("includes/functions.php");
 connectDatabase();
 $gameleader = getGameleaders();
 
-
+if(!empty($_GET["id"])){
+  deleteGameleader($_GET["id"]); 
+}
 
 
 include("includes/header.php");
@@ -14,7 +16,7 @@ include("includes/header.php");
 
   <div class = "img-thumbnail w-50 col-2 d-inline-block mb-2">
     <h4><?php echo $row["name"]?></h4>
-    <a class = "p-1 text-dark" href = 'gameleaderDetails.php?name=<?php echo $row["name"]?>'>Lees meer &hellip;</a>
+    <a class = "p-1 text-dark" href = 'gameleaderDetails.php?name=<?php echo $row["name"]?>&id=<?php echo $row["id"]?>'>Lees meer &hellip;</a>
     </div>
 <?php
 }

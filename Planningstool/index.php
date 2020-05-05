@@ -5,7 +5,7 @@ connectDatabase();
 
 if(empty($_GET['options']) || empty($_GET['order']))
 {
-  $_GET['options'] = 'id';
+  $_GET['options'] = 'name';
   $_GET['order'] = 'ASC';
 }
 

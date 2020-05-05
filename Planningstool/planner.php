@@ -26,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $dateErr = " * Verplicht";
     } else {
         $date = test_input($_POST["date"]);
+        createDate($_POST["date"]);
     }
 
     if (empty($_POST["starttime"])) {
@@ -58,11 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if($valid){
-        createPlanning($date, $starttime, $gameleader, $players, $gameName);
-        echo "<script>
-        alert('Planning is toegevoegd.');
-        window.location.href='planning.php';
-        </script>";
+        $count = createPlanning($date, $starttime, $gameleader, $players, $gameName);
     }
     
 }
@@ -87,7 +84,7 @@ include("includes/header.php");
   <div class="form-group row">
     <label class="col-sm-2 col-form-label">Vul de datum in:</label>
     <div class="col-sm-10">
-    <input type="date" name="date"><span class="text-danger"><?php echo $dateErr;?></span>
+    <input type="date" name="date"><span class="text-danger"><?php echo $dateErr; echo $count;?></span>
     </div>
   </div>
 

@@ -16,19 +16,20 @@ foreach($data as $row){?>
 
     <?php $games = getGamesFromId($row["gameName_id"]); 
     $gameleader = getGameleaderFromId($row["gameleader_id"]);
+    $date = getDateFromId($row["date_id"]);
     $eindtijd = $games["explain_minutes"] + $games["play_minutes"];
     ?>
-    <a class = "text-danger" href="planning.php?id=<?php echo $row["id"];?>" onclick="return confirm('Weet je zeker dat je <?php echo $row['gameName']; ?> om <?php echo date('H:i', strtotime($row['starttime'])); ?> uur wilt verwijderen?');"><i class="fas fa-times"></i> Verwijder</a> <br>
+    <a class = "text-danger" href="planning.php?id=<?php echo $row["id"];?>" onclick="return confirm('Weet je zeker dat je <?php echo $games['name']; ?> om <?php echo date('H:i', strtotime($row['starttime'])); ?> uur wilt verwijderen?');"><i class="fas fa-times"></i> Verwijder</a> <br>
     
     <p><b>Starttijd:</b> <?php echo date('H:i', strtotime($row["starttime"]));?> uur</p>
 
     <p><b>Spelnaam:</b> <?php echo $games["name"];?></p>
 
-    <p><b>Eindtijd:</b> <?php echo date('H:i', strtotime('+ '.$eindtijd.' minute', strtotime($row["starttime"])));?> uur</p>
-
     <p><b>Duur inclusief uitlegtijd:</b> <?php echo $eindtijd;?> minuten</p>
 
-    <p><b>Datum:</b> <?php echo date("d-m-Y", strtotime($row['date']));?> </p>
+    <p><b>Eindtijd:</b> <?php echo date('H:i', strtotime('+ '.$eindtijd.' minute', strtotime($row["starttime"])));?> uur</p>
+
+    <p><b>Datum:</b> <?php echo date("d-m-Y", strtotime($date['date']));?> </p>
 
     <p><b>Speluitlegger:</b> <?php echo $gameleader["name"];?></p>
 
